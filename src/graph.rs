@@ -15,6 +15,7 @@ pub struct Node {
     pub left: ChildNode,
     pub right: ChildNode,
     pub score: u32,
+    id: NodeId,
 }
 
 impl Debug for ChildNode {
@@ -34,6 +35,7 @@ impl Graph {
         map.insert(
             1,
             Node {
+                id: 1,
                 score: 2,
                 left: ChildNode(None),
                 right: ChildNode(Some(3)),
@@ -42,6 +44,7 @@ impl Graph {
         map.insert(
             3,
             Node {
+                id: 3,
                 score: 4,
                 left: ChildNode(None),
                 right: ChildNode(None),
@@ -53,4 +56,23 @@ impl Graph {
     pub fn get(&self, id: NodeId) -> Option<&Node> {
         self.map.get(&id)
     }
+}
+
+type Error = Box<dyn std::error::Error>;
+type Result<T, E = Error> = std::result::Result<T, E>;
+
+#[test]
+fn graph_new() -> Result<()> {
+    Graph::new();
+    Ok(())
+}
+
+#[test]
+fn graph_get() -> Result<()> {
+    let graph = Graph::new();
+    let node_1 = graph.get(1).unwrap();
+    let node_3 = graph.get(3).unwrap();
+    assert_eq!(node_1.score, 2);
+    assert_eq!(node_3.score, 4);
+    Ok(())
 }
