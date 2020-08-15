@@ -1,9 +1,9 @@
 #![warn(clippy::all, missing_debug_implementations, rust_2018_idioms)]
-#![deny(warnings)]
 
 use warp::Filter;
 
 use std::{thread, time};
+use tokio::task;
 
 #[tokio::main]
 async fn main() {
@@ -11,8 +11,10 @@ async fn main() {
 
     // GET /node/:u32
     let node = warp::path!("node" / u32).map(|node_id| {
-        // sleep here to mimic a compute-heavy task.
-        thread::sleep(time::Duration::from_secs(5));
+        task::block_in_place(|| {
+            // sleep here to mimic a compute-heavy task.
+            thread::sleep(time::Duration::from_secs(5));
+        });
         format!("visiting node id: {}", node_id)
     });
     // GET /quick_node/:u32
