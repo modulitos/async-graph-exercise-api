@@ -14,7 +14,8 @@ use std::sync::Arc;
 async fn main() {
     pretty_env_logger::init();
 
-    let graph = Graph::new();
+    // TODO: add proper error handling here
+    let graph = Graph::new().unwrap();
     let graph = Arc::new(graph);
 
     // GET /node/:u32
