@@ -18,7 +18,7 @@ pub struct ChildNode(Option<NodeId>);
 pub struct Node {
     pub left: ChildNode,
     pub right: ChildNode,
-    pub score: u32,
+    pub reward: u32,
     // the duration of time it takes to process this node:
     pub duration: u64,
     id: NodeId,
@@ -65,7 +65,7 @@ impl Graph {
                     .map
                     .get(&next_node_id)
                     .expect(&format!("non-existent node id: {}", next_node_id));
-                total += next_node.score;
+                total += next_node.reward;
                 if let Some(left_id) = next_node.left.0 {
                     nodes_to_visit.push_back(left_id)
                 }
@@ -91,8 +91,8 @@ fn graph_get() -> Result<()> {
     let graph = Graph::new()?;
     let node_1 = graph.get(1).unwrap();
     let node_3 = graph.get(3).unwrap();
-    assert_eq!(node_1.score, 100);
-    assert_eq!(node_3.score, 0);
+    assert_eq!(node_1.reward, 100);
+    assert_eq!(node_3.reward, 0);
     Ok(())
 }
 
