@@ -3,98 +3,84 @@
     "id": 1,
     "reward": 100,
     "duration": 1,
-    "left": 5,
-    "right": 3
+    "children": [5,3]
   },
   {
     "id": 2,
     "reward": 1000,
     "duration": 1,
-    "left": null,
-    "right": 3
+    "children": [3]
   },
   {
     "id": 3,
     "reward": 0,
     "duration": 1,
-    "left": 7,
-    "right": 6
+    "children": [6,7]
   },
   {
     "id": 5,
     "reward": 200,
     "duration": 1,
-    "left": 9,
-    "right":  10
+    "children": [9, 10]
   },
   {
     "id": 6,
     "reward": 1000,
     "duration": 5,
-    "left": null,
-    "right": null
+    "children": []
   },
   {
     "id": 7,
     "reward": 300,
     "duration": 1,
-    "left": 101,
-    "right": 102
+    "children": [101, 102]
   },
   {
     "id": 9,
     "reward": 50,
     "duration": 1,
-    "left": 103,
-    "right":104
+    "children": [103, 104]
   },
   {
     "id": 10,
     "reward": 100,
     "duration": 1,
-    "left": 105,
-    "right":106
+    "children": [105, 106]
   },
   {
     "id": 101,
     "reward": 100,
     "duration": 5,
-    "left": null,
-    "right": null
+    "children": []
   },
   {
     "id": 102,
     "reward": 200,
     "duration": 5,
-    "left": null,
-    "right": null
+    "children": []
   },
   {
     "id": 103,
     "reward": 300,
     "duration": 5,
-    "left": null,
-    "right": null
+    "children": []
   },
   {
     "id": 104,
     "reward": 400,
     "duration": 5,
-    "left": null,
-    "right": null
+    "children": []
   },
   {
     "id": 105,
     "reward": 500,
     "duration": 5,
-    "left": null,
-    "right": null
+    "children": []
   },
   {
     "id": 106,
     "reward": 600,
     "duration": 5,
-    "left": null,
-    "right": null
+    "children": []
   }
 ]

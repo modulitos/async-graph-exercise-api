@@ -1,6 +1,7 @@
 use serde::{Deserialize, Serialize};
 use std::collections::{HashMap, VecDeque};
 use std::fmt::Debug;
+use std::iter::FromIterator;
 
 type NodeId = u32;
 
@@ -11,28 +12,17 @@ pub struct Graph {
 type Error = Box<dyn std::error::Error>;
 pub type Result<T, E = Error> = std::result::Result<T, E>;
 
-#[derive(Hash, Deserialize, Serialize)]
-pub struct ChildNode(Option<NodeId>);
 
 #[derive(Hash, Deserialize, Serialize)]
 pub struct Node {
-    pub left: ChildNode,
-    pub right: ChildNode,
+    pub children: Vec<NodeId>,
     pub reward: u32,
+    // TODO: remove this from the output serialized form! Perhaps define a new struct for it?
     // the duration of time it takes to process this node:
     pub duration: u64,
     id: NodeId,
 }
 
-impl Debug for ChildNode {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        if let Some(n) = self.0 {
-            f.write_fmt(format_args!("{}", n))
-        } else {
-            f.write_str("null")
-        }
-    }
-}
 
 impl Graph {
     pub fn new() -> Result<Self> {
@@ -66,12 +56,7 @@ impl Graph {
                     .get(&next_node_id)
                     .expect(&format!("non-existent node id: {}", next_node_id));
                 total += next_node.reward;
-                if let Some(left_id) = next_node.left.0 {
-                    nodes_to_visit.push_back(left_id)
-                }
-                if let Some(right_id) = next_node.right.0 {
-                    nodes_to_visit.push_back(right_id)
-                }
+                nodes_to_visit.append(&mut VecDeque::from_iter(next_node.children.iter().cloned()))
             } else {
                 // all nodes have been visited
                 return total;
