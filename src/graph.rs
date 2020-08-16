@@ -106,6 +106,6 @@ fn graph_get_non_existent() -> Result<()> {
 #[test]
 fn graph_sum() -> Result<()> {
     let graph = Graph::new()?;
-    assert_eq!(graph.get_total(1), 1750);
+    assert_eq!(graph.get_total(1), 3850);
     Ok(())
 }

@@ -30,7 +30,7 @@
   {
     "id": 6,
     "score": 1000,
-    "duration": 1,
+    "duration": 5,
     "left": null,
     "right": null
   },
@@ -38,20 +38,62 @@
     "id": 7,
     "score": 300,
     "duration": 1,
-    "left": null,
-    "right": null
+    "left": 101,
+    "right": 102
   },
   {
     "id": 9,
     "score": 50,
     "duration": 1,
-    "left": null,
-    "right": null
+    "left": 103,
+    "right":104
   },
   {
     "id": 10,
     "score": 100,
     "duration": 1,
+    "left": 105,
+    "right":106
+  },
+  {
+    "id": 101,
+    "score": 100,
+    "duration": 5,
+    "left": null,
+    "right": null
+  },
+  {
+    "id": 102,
+    "score": 200,
+    "duration": 5,
+    "left": null,
+    "right": null
+  },
+  {
+    "id": 103,
+    "score": 300,
+    "duration": 5,
+    "left": null,
+    "right": null
+  },
+  {
+    "id": 104,
+    "score": 400,
+    "duration": 5,
+    "left": null,
+    "right": null
+  },
+  {
+    "id": 105,
+    "score": 500,
+    "duration": 5,
+    "left": null,
+    "right": null
+  },
+  {
+    "id": 106,
+    "score": 600,
+    "duration": 5,
     "left": null,
     "right": null
   }
