@@ -36,6 +36,9 @@ impl Debug for ChildNode {
 impl Graph {
     pub fn new() -> Result<Self> {
         let mut map = HashMap::new();
+
+        // Instantiate the graph from our `graph.json` file by deserializing it from the JSON data.
+
         let data = std::fs::read_to_string("./graph.json")?.parse::<String>()?;
         let nodes: Vec<Node> = serde_json::from_str(&data)?;
 
