@@ -8,6 +8,7 @@ use std::{thread, time};
 use tokio::task;
 
 use crate::graph::{Graph, Result};
+use std::convert::Infallible;
 use std::sync::Arc;
 
 #[tokio::main]
@@ -18,8 +19,8 @@ async fn main() -> Result<()> {
     let graph = Arc::new(graph);
 
     // GET /node/:u32
-    let node =
-        warp::path!("node" / u32).map(move |node_id| get_node_info(node_id, Arc::clone(&graph)));
+    let node = warp::path!("node" / u32)
+        .and_then(move |node_id| get_node_info(node_id, Arc::clone(&graph)));
 
     // We can use the end() filter to match a shorter path
     let help = warp::path("node")
@@ -32,19 +33,16 @@ async fn main() -> Result<()> {
     Ok(())
 }
 
-fn get_node_info(node_id: u32, graph: Arc<Graph>) -> String {
+async fn get_node_info(node_id: u32, graph: Arc<Graph>) -> Result<impl warp::Reply, Infallible> {
     task::block_in_place(|| {
         // sleep here to mimic a compute-heavy task.
         thread::sleep(time::Duration::from_secs(5));
     });
 
     if let Some(node) = graph.get(node_id) {
-        format!(
-            "visiting node id: {}\n  score: {}\n  left child: {:?}\n  right child: {:?}\n",
-            node_id, node.score, node.left, node.right
-        )
+        Ok(warp::reply::json(node))
     } else {
         // TODO: this should return a 404 instead.
-        format!("no node found for node id: {}", node_id)
+        Ok(warp::reply::json(&format!("no node found for node id: {}", node_id)))
     }
 }

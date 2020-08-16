@@ -1,4 +1,4 @@
-use serde::Deserialize;
+use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 use std::fmt::Debug;
 
@@ -12,10 +12,10 @@ type Error = Box<dyn std::error::Error>;
 pub type Result<T, E = Error> = std::result::Result<T, E>;
 
 
-#[derive(Hash, Deserialize)]
+#[derive(Hash, Deserialize, Serialize)]
 pub struct ChildNode(Option<NodeId>);
 
-#[derive(Hash, Deserialize)]
+#[derive(Hash, Deserialize, Serialize)]
 pub struct Node {
     pub left: ChildNode,
     pub right: ChildNode,
