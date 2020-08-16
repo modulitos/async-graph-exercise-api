@@ -2,14 +2,14 @@
 
 mod graph;
 
-use warp::Filter;
+use warp::{Filter, Rejection};
 
 use std::{thread, time};
 use tokio::task;
 
 use crate::graph::{Graph, Result};
-use std::convert::Infallible;
 use std::sync::Arc;
+use warp::hyper::StatusCode;
 
 #[tokio::main]
 async fn main() -> Result<()> {
@@ -33,7 +33,7 @@ async fn main() -> Result<()> {
     Ok(())
 }
 
-async fn get_node_info(node_id: u32, graph: Arc<Graph>) -> Result<impl warp::Reply, Infallible> {
+async fn get_node_info(node_id: u32, graph: Arc<Graph>) -> Result<impl warp::Reply, Rejection> {
     task::block_in_place(|| {
         // sleep here to mimic a compute-heavy task.
         thread::sleep(time::Duration::from_secs(5));
@@ -42,7 +42,6 @@ async fn get_node_info(node_id: u32, graph: Arc<Graph>) -> Result<impl warp::Rep
     if let Some(node) = graph.get(node_id) {
         Ok(warp::reply::json(node))
     } else {
-        // TODO: this should return a 404 instead.
-        Ok(warp::reply::json(&format!("no node found for node id: {}", node_id)))
+        Err(warp::reject::not_found())
     }
 }
