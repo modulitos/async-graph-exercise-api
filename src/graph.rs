@@ -19,6 +19,8 @@ pub struct Node {
     pub left: ChildNode,
     pub right: ChildNode,
     pub score: u32,
+    // the duration of time it takes to process this node:
+    pub duration: u64,
     id: NodeId,
 }
 

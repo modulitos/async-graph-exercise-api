@@ -34,12 +34,12 @@ async fn main() -> Result<()> {
 }
 
 async fn get_node_info(node_id: u32, graph: Arc<Graph>) -> Result<impl warp::Reply, Rejection> {
-    task::block_in_place(|| {
-        // sleep here to mimic a compute-heavy task.
-        thread::sleep(time::Duration::from_secs(5));
-    });
 
     if let Some(node) = graph.get(node_id) {
+        task::block_in_place(|| {
+            // sleep here to mimic a compute-heavy task.
+            thread::sleep(time::Duration::from_secs(node.duration));
+        });
         Ok(warp::reply::json(node))
     } else {
         Err(warp::reject::not_found())
