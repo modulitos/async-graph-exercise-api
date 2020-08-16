@@ -7,15 +7,14 @@ use warp::Filter;
 use std::{thread, time};
 use tokio::task;
 
-use crate::graph::Graph;
+use crate::graph::{Graph, Result};
 use std::sync::Arc;
 
 #[tokio::main]
-async fn main() {
+async fn main() -> Result<()> {
     pretty_env_logger::init();
 
-    // TODO: add proper error handling here
-    let graph = Graph::new().unwrap();
+    let graph = Graph::new()?;
     let graph = Arc::new(graph);
 
     // GET /node/:u32
@@ -30,6 +29,7 @@ async fn main() {
 
     let routes = warp::get().and(graph);
     warp::serve(routes).run(([127, 0, 0, 1], 7878)).await;
+    Ok(())
 }
 
 fn get_node_info(node_id: u32, graph: Arc<Graph>) -> String {
