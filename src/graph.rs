@@ -36,23 +36,8 @@ impl Debug for ChildNode {
 impl Graph {
     pub fn new() -> Result<Self> {
         let mut map = HashMap::new();
-        // TODO: read graph structure from a json file instead.
-        let data = r#"
-        [
-          {
-            "id": 1,
-            "score": 2,
-            "left": null,
-            "right": 3
-          },
-          {
-            "id": 3,
-            "score": 4,
-            "left": null,
-            "right": null
-          }
-        ]"#;
-        let nodes: Vec<Node> = serde_json::from_str(data)?;
+        let data = std::fs::read_to_string("./graph.json")?.parse::<String>()?;
+        let nodes: Vec<Node> = serde_json::from_str(&data)?;
 
         nodes.into_iter().for_each(|node| {
            map.insert(node.id, node);
