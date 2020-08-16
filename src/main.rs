@@ -7,9 +7,9 @@ use warp::{Filter, Rejection};
 use std::{thread, time};
 use tokio::task;
 
-use crate::graph::{Graph, Result};
+use crate::graph::{Graph, Node, NodeId, Result};
+use serde::Serialize;
 use std::sync::Arc;
-use warp::hyper::StatusCode;
 
 #[tokio::main]
 async fn main() -> Result<()> {
@@ -33,14 +33,29 @@ async fn main() -> Result<()> {
     Ok(())
 }
 
-async fn get_node_info(node_id: u32, graph: Arc<Graph>) -> Result<impl warp::Reply, Rejection> {
+#[derive(Serialize)]
+struct ApiNode {
+    // TODO: consider mapping this into a string of the full URL
+    children: Vec<NodeId>,
+    reward: u32,
+}
 
+impl From<&Node> for ApiNode {
+    fn from(node: &Node) -> Self {
+        ApiNode {
+            reward: node.reward,
+            children: node.children.clone(),
+        }
+    }
+}
+
+async fn get_node_info(node_id: u32, graph: Arc<Graph>) -> Result<impl warp::Reply, Rejection> {
     if let Some(node) = graph.get(node_id) {
         task::block_in_place(|| {
             // sleep here to mimic a compute-heavy task.
             thread::sleep(time::Duration::from_secs(node.duration));
         });
-        Ok(warp::reply::json(node))
+        Ok(warp::reply::json(&ApiNode::from(node)))
     } else {
         Err(warp::reject::not_found())
     }

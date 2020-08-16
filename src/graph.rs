@@ -1,9 +1,8 @@
-use serde::{Deserialize, Serialize};
+use serde::Deserialize;
 use std::collections::{HashMap, VecDeque};
-use std::fmt::Debug;
 use std::iter::FromIterator;
 
-type NodeId = u32;
+pub type NodeId = u32;
 
 pub struct Graph {
     map: HashMap<NodeId, Node>,
@@ -12,17 +11,14 @@ pub struct Graph {
 type Error = Box<dyn std::error::Error>;
 pub type Result<T, E = Error> = std::result::Result<T, E>;
 
-
-#[derive(Hash, Deserialize, Serialize)]
+#[derive(Hash, Deserialize)]
 pub struct Node {
     pub children: Vec<NodeId>,
     pub reward: u32,
-    // TODO: remove this from the output serialized form! Perhaps define a new struct for it?
     // the duration of time it takes to process this node:
     pub duration: u64,
     id: NodeId,
 }
-
 
 impl Graph {
     pub fn new() -> Result<Self> {
