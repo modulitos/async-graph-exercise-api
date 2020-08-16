@@ -62,7 +62,14 @@ fn graph_get() -> Result<()> {
     let graph = Graph::new()?;
     let node_1 = graph.get(1).unwrap();
     let node_3 = graph.get(3).unwrap();
-    assert_eq!(node_1.score, 2);
-    assert_eq!(node_3.score, 4);
+    assert_eq!(node_1.score, 100);
+    assert_eq!(node_3.score, 0);
+    Ok(())
+}
+
+#[test]
+fn graph_get_non_existent() -> Result<()> {
+    let graph = Graph::new()?;
+    assert_eq!(graph.get(4).is_none(), true);
     Ok(())
 }

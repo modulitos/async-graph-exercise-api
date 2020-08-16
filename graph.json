@@ -1,13 +1,25 @@
 [
   {
     "id": 1,
-    "score": 2,
+    "score": 100,
+    "left": null,
+    "right": 3
+  },
+  {
+    "id": 2,
+    "score": 1000,
     "left": null,
     "right": 3
   },
   {
     "id": 3,
-    "score": 4,
+    "score": 0,
+    "left": null,
+    "right": null
+  },
+  {
+    "id": 5,
+    "score": 200,
     "left": null,
     "right": null
   }
