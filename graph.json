@@ -1,84 +1,84 @@
 [
   {
-    "id": 1,
+    "id": "a",
     "reward": 100,
     "duration": 1,
-    "children": [5,3]
+    "children": ["e","c"]
   },
   {
-    "id": 2,
+    "id": "b",
     "reward": 1000,
     "duration": 1,
-    "children": [3]
+    "children": ["c"]
   },
   {
-    "id": 3,
+    "id": "c",
     "reward": 0,
     "duration": 1,
-    "children": [6,7]
+    "children": ["f","g"]
   },
   {
-    "id": 5,
+    "id": "e",
     "reward": 200,
     "duration": 1,
-    "children": [9, 10]
+    "children": ["i", "j"]
   },
   {
-    "id": 6,
+    "id": "f",
     "reward": 1000,
     "duration": 5,
     "children": []
   },
   {
-    "id": 7,
+    "id": "g",
     "reward": 300,
     "duration": 1,
-    "children": [101, 102]
+    "children": ["s", "t"]
   },
   {
-    "id": 9,
+    "id": "i",
     "reward": 50,
     "duration": 1,
-    "children": [103, 104]
+    "children": ["u", "v"]
   },
   {
-    "id": 10,
+    "id": "j",
     "reward": 100,
     "duration": 1,
-    "children": [105, 106]
+    "children": ["w", "x"]
   },
   {
-    "id": 101,
+    "id": "s",
     "reward": 100,
     "duration": 5,
     "children": []
   },
   {
-    "id": 102,
+    "id": "t",
     "reward": 200,
     "duration": 5,
     "children": []
   },
   {
-    "id": 103,
+    "id": "u",
     "reward": 300,
     "duration": 5,
     "children": []
   },
   {
-    "id": 104,
+    "id": "v",
     "reward": 400,
     "duration": 5,
     "children": []
   },
   {
-    "id": 105,
+    "id": "w",
     "reward": 500,
     "duration": 5,
     "children": []
   },
   {
-    "id": 106,
+    "id": "x",
     "reward": 600,
     "duration": 5,
     "children": []

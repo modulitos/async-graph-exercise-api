@@ -2,7 +2,7 @@ use serde::Deserialize;
 use std::collections::{HashMap, VecDeque};
 use std::iter::FromIterator;
 
-pub type NodeId = u32;
+pub type NodeId = char;
 
 pub struct Graph {
     map: HashMap<NodeId, Node>,
@@ -70,8 +70,8 @@ fn graph_new() -> Result<()> {
 #[test]
 fn graph_get() -> Result<()> {
     let graph = Graph::new()?;
-    let node_1 = graph.get(1).unwrap();
-    let node_3 = graph.get(3).unwrap();
+    let node_1 = graph.get('a').unwrap();
+    let node_3 = graph.get('c').unwrap();
     assert_eq!(node_1.reward, 100);
     assert_eq!(node_3.reward, 0);
     Ok(())
@@ -80,13 +80,13 @@ fn graph_get() -> Result<()> {
 #[test]
 fn graph_get_non_existent() -> Result<()> {
     let graph = Graph::new()?;
-    assert_eq!(graph.get(4).is_none(), true);
+    assert_eq!(graph.get('d').is_none(), true);
     Ok(())
 }
 
 #[test]
 fn graph_sum() -> Result<()> {
     let graph = Graph::new()?;
-    assert_eq!(graph.get_total(1), 3850);
+    assert_eq!(graph.get_total('a'), 3850);
     Ok(())
 }
