@@ -27,7 +27,7 @@ Where the children in this example can be accessed via:
 
 The local server uses Warp, which can be started like so:
 
-    cargo run warp_server
+    cargo run --bin warp_server
 
 The server will start at port 7878.
 
