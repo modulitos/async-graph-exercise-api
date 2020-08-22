@@ -1,13 +1,11 @@
 #![warn(clippy::all, missing_debug_implementations, rust_2018_idioms)]
 
-mod graph;
-
 use warp::{Filter, Rejection};
 
 use std::{thread, time};
 use tokio::task;
 
-use crate::graph::{Graph, Node, NodeId, Result};
+use api::graph::{Graph, Node, NodeId, Result};
 use serde::Serialize;
 use std::sync::Arc;
 
@@ -53,6 +51,7 @@ async fn get_node_info(node_id: NodeId, graph: Arc<Graph>) -> Result<impl warp::
     if let Some(node) = graph.get(node_id) {
         task::block_in_place(|| {
             // sleep here to mimic a compute-heavy task.
+            // TODO: sleep the task, instead of the whole thread!
             thread::sleep(time::Duration::from_secs(node.duration));
         });
         Ok(warp::reply::json(&ApiNode::from(node)))

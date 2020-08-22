@@ -23,9 +23,11 @@ Where the children in this example can be accessed via:
     GET http://localhost:7878/node/c
     GET http://localhost:7878/node/e
 
-# How to run the server
+## How to run the server locally
 
-    cargo run
+The local server uses Warp, which can be started like so:
+
+    cargo run warp-server
 
 The server will start at port 7878.
 
@@ -33,3 +35,6 @@ The server will start at port 7878.
 
     {"children":["e","c"],"reward":100}
 
+## Deploying to AWS Lambda
+
+TODO
