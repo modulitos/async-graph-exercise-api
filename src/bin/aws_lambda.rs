@@ -2,14 +2,14 @@
 extern crate lambda_runtime as lambda;
 #[macro_use]
 extern crate log;
-use serde::{Deserialize, Serialize};
+use serde::Deserialize;
 extern crate simple_logger;
 use once_cell::sync::OnceCell;
 
 use std::{thread, time};
 use tokio::task;
 
-use api::graph::{Graph, Node, NodeId, Result};
+use api::graph::{Graph, NodeId, Result, SerializedNode};
 
 use lambda::error::HandlerError;
 
@@ -25,22 +25,6 @@ struct CustomEvent {
 
 static INSTANCE: OnceCell<Graph> = OnceCell::new();
 
-#[derive(Serialize)]
-struct ApiNode {
-    // TODO: consider mapping this into a string of the full URL
-    children: Vec<NodeId>,
-    reward: u32,
-}
-
-impl From<&Node> for ApiNode {
-    fn from(node: &Node) -> Self {
-        ApiNode {
-            reward: node.reward,
-            children: node.children.clone(),
-        }
-    }
-}
-
 // The entry point of our bootstrap executable. This is the code that will run when Lambda starts
 // our function:
 
@@ -53,7 +37,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     Ok(())
 }
 
-fn my_handler(e: CustomEvent, c: lambda::Context) -> Result<ApiNode, HandlerError> {
+fn my_handler(e: CustomEvent, c: lambda::Context) -> Result<SerializedNode, HandlerError> {
     let graph = INSTANCE.get().expect("cannot get graph");
 
     if let Some(node) = graph.get(e.node_id) {
@@ -62,7 +46,7 @@ fn my_handler(e: CustomEvent, c: lambda::Context) -> Result<ApiNode, HandlerErro
             // TODO: sleep the task, instead of the whole thread!
             thread::sleep(time::Duration::from_secs(node.duration));
         });
-        Ok(ApiNode::from(node))
+        Ok(SerializedNode::from(node))
     } else {
         error!("The node id was not found in the request {}", c.aws_request_id);
         Err(c.new_error(&format!("Node id is not found: {}", e.node_id)))

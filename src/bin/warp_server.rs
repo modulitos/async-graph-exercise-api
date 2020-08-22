@@ -5,8 +5,7 @@ use warp::{Filter, Rejection};
 use std::{thread, time};
 use tokio::task;
 
-use api::graph::{Graph, Node, NodeId, Result};
-use serde::Serialize;
+use api::graph::{SerializedNode, Graph, NodeId, Result};
 use std::sync::Arc;
 
 #[tokio::main]
@@ -31,22 +30,6 @@ async fn main() -> Result<()> {
     Ok(())
 }
 
-#[derive(Serialize)]
-struct ApiNode {
-    // TODO: consider mapping this into a string of the full URL
-    children: Vec<NodeId>,
-    reward: u32,
-}
-
-impl From<&Node> for ApiNode {
-    fn from(node: &Node) -> Self {
-        ApiNode {
-            reward: node.reward,
-            children: node.children.clone(),
-        }
-    }
-}
-
 async fn get_node_info(node_id: NodeId, graph: Arc<Graph>) -> Result<impl warp::Reply, Rejection> {
     if let Some(node) = graph.get(node_id) {
         task::block_in_place(|| {
@@ -54,7 +37,7 @@ async fn get_node_info(node_id: NodeId, graph: Arc<Graph>) -> Result<impl warp::
             // TODO: sleep the task, instead of the whole thread!
             thread::sleep(time::Duration::from_secs(node.duration));
         });
-        Ok(warp::reply::json(&ApiNode::from(node)))
+        Ok(warp::reply::json(&SerializedNode::from(node)))
     } else {
         Err(warp::reject::not_found())
     }

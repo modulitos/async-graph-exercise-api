@@ -1,4 +1,4 @@
-use serde::Deserialize;
+use serde::{ Deserialize, Serialize};
 use std::collections::{HashMap, VecDeque};
 use std::iter::FromIterator;
 
@@ -18,6 +18,23 @@ pub struct Node {
     // the duration of time it takes to process this node:
     pub duration: u64,
     id: NodeId,
+}
+
+/// Represents the serialized representation of a graph's node.
+#[derive(Serialize)]
+pub struct SerializedNode {
+    // TODO: consider mapping this into a string of the full URL
+    children: Vec<NodeId>,
+    reward: u32,
+}
+
+impl From<&Node> for SerializedNode {
+    fn from(node: &Node) -> Self {
+        SerializedNode {
+            reward: node.reward,
+            children: node.children.clone(),
+        }
+    }
 }
 
 impl Graph {
