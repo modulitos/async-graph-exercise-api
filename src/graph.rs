@@ -42,6 +42,8 @@ impl Graph {
         let mut map = HashMap::new();
 
         // Instantiate the graph from our `graph.json` file by deserializing it from the JSON data.
+        // Using the include_str macro to read the JSON into a str at compile time.
+
         let data = std::include_str!("graph.json");
         let nodes: Vec<Node> = serde_json::from_str(data)?;
 
