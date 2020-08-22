@@ -37,4 +37,26 @@ The server will start at port 7878.
 
 ## Deploying to AWS Lambda
 
-TODO
+The API is currently deployed at `graph.modulitos.com`
+
+For example:
+
+    curl https://graph.modulitos.com/node/a
+
+    {"children":["e","c"],"reward":100}
+
+### To create a package for deployment to AWS Lambda
+
+    ./deploy.sh
+
+Then upload the resulting `rust.zip` file to the Lambda function
+
+### some notes while setting this up on AWS Lambda:
+
+Followed steps here for basic Lambda setup: https://aws.amazon.com/blogs/opensource/rust-runtime-for-aws-lambda/
+
+And here for setting up REST API Gateway:
+https://kennbrodhagen.net/2015/12/06/how-to-create-a-request-object-for-your-lambda-event-from-api-gateway/
+
+And here for setting up API Gateway with path params:
+https://docs.aws.amazon.com/apigateway/latest/developerguide/integrating-api-with-aws-services-lambda.html#api-as-lambda-proxy-expose-get-method-with-path-parameters-to-call-lambda-function

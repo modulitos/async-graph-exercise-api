@@ -1,2 +1,4 @@
 /target
 .idea
+# ignore the generate file that will be uploaded to AWS Lambda:
+rust.zip

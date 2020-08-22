@@ -26,6 +26,7 @@ impl Graph {
 
         // Instantiate the graph from our `graph.json` file by deserializing it from the JSON data.
 
+        // TODO: bundle this file at compile time: https://doc.rust-lang.org/std/macro.include_str.html
         let data = std::fs::read_to_string("./graph.json")?.parse::<String>()?;
         let nodes: Vec<Node> = serde_json::from_str(&data)?;
 
