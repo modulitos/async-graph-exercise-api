@@ -3,7 +3,7 @@
 use warp::{Filter, Rejection};
 
 use std::{thread, time};
-use tokio::task;
+use tokio::{task, time as tokio_time};
 
 use api::graph::{SerializedNode, Graph, NodeId, Result};
 use std::sync::Arc;
@@ -32,11 +32,8 @@ async fn main() -> Result<()> {
 
 async fn get_node_info(node_id: NodeId, graph: Arc<Graph>) -> Result<impl warp::Reply, Rejection> {
     if let Some(node) = graph.get(node_id) {
-        task::block_in_place(|| {
-            // sleep here to mimic a compute-heavy task.
-            // TODO: sleep the task, instead of the whole thread!
-            thread::sleep(time::Duration::from_secs(node.duration));
-        });
+        // sleep here to mimic a compute-heavy task.
+        tokio_time::delay_for(time::Duration::from_secs(node.duration)).await;
         Ok(warp::reply::json(&SerializedNode::from(node)))
     } else {
         Err(warp::reject::not_found())

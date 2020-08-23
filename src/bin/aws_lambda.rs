@@ -38,6 +38,7 @@ fn main() -> Result<(), Box<dyn Error>> {
 }
 
 fn my_handler(e: CustomEvent, c: lambda::Context) -> Result<SerializedNode, HandlerError> {
+    // TODO: implement error handling
     let graph = INSTANCE.get().expect("cannot get graph");
 
     if let Some(node) = graph.get(e.node_id) {
