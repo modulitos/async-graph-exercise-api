@@ -46,7 +46,8 @@ fn my_handler(e: CustomEvent, c: lambda::Context) -> Result<SerializedNode, Hand
 
             // TODO: sleep the task, instead of the whole thread! Ideally we can use
             // tokio::time::delay_for, but we'd have to make this handler async, which doesn't seem
-            // like it's supported yet?
+            // to be supported in this version of lambda_runtime. We might need to upgrade that
+            // library first...
             // https://github.com/awslabs/aws-lambda-rust-runtime/issues/14#issuecomment-569046122
 
             task::block_in_place(|| {
