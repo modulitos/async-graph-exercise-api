@@ -102,8 +102,22 @@ fn graph_get_non_existent() -> Result<()> {
 }
 
 #[test]
+fn graph_sum_e() -> Result<()> {
+    let graph = Graph::new()?;
+    assert_eq!(graph.get_total('e'), 2150);
+    Ok(())
+}
+
+#[test]
+fn graph_sum_c() -> Result<()> {
+    let graph = Graph::new()?;
+    assert_eq!(graph.get_total('c'), 1600);
+    Ok(())
+}
+
+#[test]
 fn graph_sum() -> Result<()> {
     let graph = Graph::new()?;
-    assert_eq!(graph.get_total('a'), 3850);
+    assert_eq!(graph.get_total('a'), 4250);
     Ok(())
 }

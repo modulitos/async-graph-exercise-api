@@ -2,8 +2,8 @@
   {
     "id": "a",
     "reward": 100,
-    "duration": 1,
-    "children": ["e","c"]
+    "duration": 0,
+    "children": ["e","c","k", "l"]
   },
   {
     "id": "b",
@@ -14,13 +14,13 @@
   {
     "id": "c",
     "reward": 0,
-    "duration": 1,
+    "duration": 0,
     "children": ["f","g"]
   },
   {
     "id": "e",
     "reward": 200,
-    "duration": 1,
+    "duration": 0,
     "children": ["i", "j"]
   },
   {
@@ -32,7 +32,7 @@
   {
     "id": "g",
     "reward": 300,
-    "duration": 1,
+    "duration": 0,
     "children": ["s", "t"]
   },
   {
@@ -46,6 +46,24 @@
     "reward": 100,
     "duration": 1,
     "children": ["w", "x"]
+  },
+  {
+    "id": "k",
+    "reward": 100,
+    "duration": 5,
+    "children": []
+  },
+  {
+    "id": "l",
+    "reward": 100,
+    "duration": 2,
+    "children": ["m"]
+  },
+  {
+    "id": "m",
+    "reward": 200,
+    "duration": 3,
+    "children": []
   },
   {
     "id": "s",
@@ -62,25 +80,25 @@
   {
     "id": "u",
     "reward": 300,
-    "duration": 5,
+    "duration": 4,
     "children": []
   },
   {
     "id": "v",
     "reward": 400,
-    "duration": 5,
+    "duration": 4,
     "children": []
   },
   {
     "id": "w",
     "reward": 500,
-    "duration": 5,
+    "duration": 4,
     "children": []
   },
   {
     "id": "x",
     "reward": 600,
-    "duration": 5,
+    "duration": 4,
     "children": []
   }
 ]
