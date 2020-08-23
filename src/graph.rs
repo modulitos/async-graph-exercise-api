@@ -8,8 +8,7 @@ pub struct Graph {
     map: HashMap<NodeId, Node>,
 }
 
-type Error = Box<dyn std::error::Error>;
-pub type Result<T, E = Error> = std::result::Result<T, E>;
+use crate::error::{Result, GraphError};
 
 #[derive(Hash, Deserialize)]
 pub struct Node {

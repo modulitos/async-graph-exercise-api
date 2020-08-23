@@ -5,7 +5,8 @@ use warp::{Filter, Rejection};
 use std::{thread, time};
 use tokio::{task, time as tokio_time};
 
-use api::graph::{SerializedNode, Graph, NodeId, Result};
+use api::error::{Result};
+use api::graph::{SerializedNode, Graph, NodeId};
 use std::sync::Arc;
 
 #[tokio::main]

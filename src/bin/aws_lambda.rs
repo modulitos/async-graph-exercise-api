@@ -9,7 +9,8 @@ use once_cell::sync::OnceCell;
 use std::{thread, time};
 use tokio::task;
 
-use api::graph::{Graph, NodeId, Result, SerializedNode};
+use api::error::{Result};
+use api::graph::{Graph, NodeId, SerializedNode};
 
 use lambda::error::HandlerError;
 
