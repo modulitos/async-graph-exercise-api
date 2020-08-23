@@ -9,12 +9,10 @@ use once_cell::sync::OnceCell;
 use std::{thread, time};
 use tokio::task;
 
-use api::error::{Result};
+use api::error::Result;
 use api::graph::{Graph, NodeId, SerializedNode};
 
 use lambda::error::HandlerError;
-
-use std::error::Error;
 
 #[derive(Deserialize, Clone)]
 struct CustomEvent {
@@ -38,8 +36,9 @@ fn main() -> Result<()> {
 }
 
 fn my_handler(e: CustomEvent, c: lambda::Context) -> Result<SerializedNode, HandlerError> {
-    // TODO: implement error handling
-    let graph = INSTANCE.get().expect("cannot get graph");
+    let graph = INSTANCE
+        .get()
+        .ok_or_else(|| c.new_error("unable to retrieve graph instance"))?;
 
     if let Some(node) = graph.get(e.node_id) {
         task::block_in_place(|| {
@@ -49,7 +48,10 @@ fn my_handler(e: CustomEvent, c: lambda::Context) -> Result<SerializedNode, Hand
         });
         Ok(SerializedNode::from(node))
     } else {
-        error!("The node id was not found in the request {}", c.aws_request_id);
+        error!(
+            "The node id was not found in the request {}",
+            c.aws_request_id
+        );
         Err(c.new_error(&format!("Node id is not found: {}", e.node_id)))
     }
 }
