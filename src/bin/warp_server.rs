@@ -2,11 +2,11 @@
 
 use warp::{Filter, Rejection};
 
-use std::{thread, time};
-use tokio::{task, time as tokio_time};
+use std::time;
+use tokio::time as tokio_time;
 
-use api::error::{Result};
-use api::graph::{SerializedNode, Graph, NodeId};
+use api::error::Result;
+use api::graph::{Graph, NodeId, SerializedNode};
 use std::sync::Arc;
 
 #[tokio::main]

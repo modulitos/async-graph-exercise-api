@@ -8,7 +8,7 @@ pub struct Graph {
     map: HashMap<NodeId, Node>,
 }
 
-use crate::error::{Result, GraphError};
+use crate::error::{Result};
 
 #[derive(Hash, Deserialize)]
 pub struct Node {

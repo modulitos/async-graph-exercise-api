@@ -29,10 +29,9 @@ static INSTANCE: OnceCell<Graph> = OnceCell::new();
 // The entry point of our bootstrap executable. This is the code that will run when Lambda starts
 // our function:
 
-fn main() -> Result<(), Box<dyn Error>> {
+fn main() -> Result<()> {
     simple_logger::init_with_level(log::Level::Info)?;
-    // TODO: implement error handling
-    INSTANCE.set(Graph::new().unwrap()).ok();
+    INSTANCE.set(Graph::new()?).ok();
     lambda!(my_handler);
 
     Ok(())
