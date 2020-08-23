@@ -16,14 +16,14 @@ async fn main() -> Result<()> {
     let graph = Graph::new()?;
     let graph = Arc::new(graph);
 
-    // GET /node/:u32
+    // GET /node/:NodeId
     let node = warp::path!("node" / NodeId)
         .and_then(move |node_id| get_node_info(node_id, Arc::clone(&graph)));
 
     // We can use the end() filter to match a shorter path
     let help = warp::path("node")
         .and(warp::path::end())
-        .map(|| "This is the node API. Try calling /node/:u32");
+        .map(|| "This is the node API. Try calling /node/:NodeId");
     let graph = help.or(node);
 
     let routes = warp::get().and(graph);
