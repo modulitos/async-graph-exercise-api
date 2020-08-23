@@ -43,8 +43,13 @@ fn my_handler(e: CustomEvent, c: lambda::Context) -> Result<SerializedNode, Hand
     if let Some(node) = graph.get(e.node_id) {
         if node.duration > 0 {
             // sleep here to mimic a compute-heavy task.
+
+            // TODO: sleep the task, instead of the whole thread! Ideally we can use
+            // tokio::time::delay_for, but we'd have to make this handler async, which doesn't seem
+            // like it's supported yet?
+            // https://github.com/awslabs/aws-lambda-rust-runtime/issues/14#issuecomment-569046122
+
             task::block_in_place(|| {
-                // TODO: sleep the task, instead of the whole thread!
                 thread::sleep(time::Duration::from_secs(node.duration));
             });
         }
