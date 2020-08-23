@@ -33,8 +33,10 @@ async fn main() -> Result<()> {
 
 async fn get_node_info(node_id: NodeId, graph: Arc<Graph>) -> Result<impl warp::Reply, Rejection> {
     if let Some(node) = graph.get(node_id) {
-        // sleep here to mimic a compute-heavy task.
-        tokio_time::delay_for(time::Duration::from_secs(node.duration)).await;
+        if node.duration > 0 {
+            // sleep here to mimic a compute-heavy task.
+            tokio_time::delay_for(time::Duration::from_secs(node.duration)).await;
+        }
         Ok(warp::reply::json(&SerializedNode::from(node)))
     } else {
         Err(warp::reject::not_found())
