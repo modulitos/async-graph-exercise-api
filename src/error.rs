@@ -12,6 +12,6 @@ pub enum GraphError {
     AWSError(#[from] HandlerError),
     #[error("logger error!")]
     LoggerError(#[from] SetLoggerError),
-    #[error("the data for key is not available")]
-    InvalidGraph(#[from] serde_json_error),
+    #[error("Unable to deserialize data from JSON file")]
+    SerdeError(#[from] serde_json_error),
 }
